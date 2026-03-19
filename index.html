@@ -3,255 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Feelings Calculator</title>
+  <title>Feelings Calculator 💘 — Love, Crush & Friendship Percentage</title>
+  <meta name="description" content="Calculate love, crush, friendship and more between two people. Free fun feelings percentage calculator — share your result with friends!"/>
+  <meta name="keywords" content="feelings calculator, love calculator 2025, crush percentage, friendship test, situationship meter, BFF test, love percentage, relationship calculator"/>
+  <meta property="og:title" content="Feelings Calculator 💘"/>
+  <meta property="og:description" content="Find out the feelings percentage between you and someone special. Try love, crush, friendship and more!"/>
+  <meta property="og:type" content="website"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0d0d0f;
-      --card: #16161a;
-      --border: #2a2a35;
-      --accent: #ff4d6d;
-      --accent2: #c77dff;
-      --text: #e8e8f0;
-      --muted: #7a7a90;
-      --glow: rgba(255, 77, 109, 0.18);
+      --bg: #0d0d0f; --card: #16161a; --border: #2a2a35;
+      --accent: #ff4d6d; --accent2: #c77dff;
+      --text: #e8e8f0; --muted: #7a7a90; --glow: rgba(255,77,109,0.18);
     }
-
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg); color: var(--text);
       font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 16px 80px;
-      position: relative;
-      overflow-x: hidden;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; padding: 40px 16px 80px;
+      position: relative; overflow-x: hidden;
     }
-
-    /* Background blobs */
     body::before, body::after {
-      content: '';
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.18;
-      pointer-events: none;
-      z-index: 0;
+      content: ''; position: fixed; border-radius: 50%;
+      filter: blur(90px); opacity: 0.18; pointer-events: none; z-index: 0;
     }
-    body::before {
-      width: 500px; height: 500px;
-      background: var(--accent);
-      top: -100px; left: -150px;
-    }
-    body::after {
-      width: 400px; height: 400px;
-      background: var(--accent2);
-      bottom: -80px; right: -120px;
-    }
+    body::before { width:500px;height:500px;background:var(--accent);top:-100px;left:-150px; }
+    body::after  { width:400px;height:400px;background:var(--accent2);bottom:-80px;right:-120px; }
 
-    .wrap { position: relative; z-index: 1; width: 100%; max-width: 560px; }
+    .wrap { position:relative;z-index:1;width:100%;max-width:560px; }
 
-    header { text-align: center; margin-bottom: 40px; }
-    header .tag {
-      display: inline-block;
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
+    header { text-align:center;margin-bottom:40px; }
+    header .tag { display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:14px; }
     header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 6vw, 3rem);
-      font-weight: 700;
-      line-height: 1.15;
-      background: linear-gradient(135deg, #fff 30%, var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3rem);font-weight:700;line-height:1.15;
+      background:linear-gradient(135deg,#fff 30%,var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
     }
-    header p {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 300;
-    }
+    header p { margin-top:12px;color:var(--muted);font-size:14px;font-weight:300; }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 32px 28px;
-      box-shadow: 0 0 60px var(--glow);
-    }
+    .card { background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px 28px;box-shadow:0 0 60px var(--glow); }
 
-    /* Emotion pills */
-    .emotion-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
+    .emotion-grid { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px; }
     .pill {
-      cursor: pointer;
-      padding: 7px 16px;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      transition: all 0.2s;
-      display: flex; align-items: center; gap: 6px;
+      cursor:pointer;padding:7px 16px;border-radius:100px;border:1px solid var(--border);
+      background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;
+      transition:all 0.2s;display:flex;align-items:center;gap:6px;
     }
-    .pill:hover { border-color: var(--accent); color: var(--text); }
-    .pill.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-      box-shadow: 0 0 18px rgba(255,77,109,0.4);
-    }
+    .pill:hover { border-color:var(--accent);color:var(--text); }
+    .pill.active { background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 18px rgba(255,77,109,0.4); }
 
-    /* Mode toggle */
-    .mode-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
+    .mode-row { display:flex;gap:10px;margin-bottom:24px; }
     .mode-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
+      flex:1;padding:10px;border-radius:12px;border:1px solid var(--border);
+      background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;
     }
-    .mode-btn.active {
-      background: rgba(199,125,255,0.15);
-      border-color: var(--accent2);
-      color: var(--accent2);
-    }
+    .mode-btn.active { background:rgba(199,125,255,0.15);border-color:var(--accent2);color:var(--accent2); }
 
-    /* Inputs */
-    .input-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+    .input-row { display:flex;align-items:center;gap:10px;margin-bottom:20px; }
     .input-row input {
-      flex: 1;
-      background: #1e1e26;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 13px 16px;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s;
+      flex:1;background:#1e1e26;border:1px solid var(--border);border-radius:12px;
+      padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;
     }
-    .input-row input:focus { border-color: var(--accent); }
-    .input-row input::placeholder { color: var(--muted); }
-    .connector {
-      color: var(--muted);
-      font-size: 12px;
-      font-style: italic;
-      white-space: nowrap;
-    }
+    .input-row input:focus { border-color:var(--accent); }
+    .input-row input::placeholder { color:var(--muted); }
+    .connector { color:var(--muted);font-size:12px;font-style:italic;white-space:nowrap; }
 
-    /* Calculate button */
     .calc-btn {
-      width: 100%;
-      padding: 15px;
-      border-radius: 14px;
-      border: none;
-      background: linear-gradient(135deg, var(--accent), #ff8fa3);
-      color: #fff;
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      font-style: italic;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s;
-      letter-spacing: 0.5px;
+      width:100%;padding:15px;border-radius:14px;border:none;
+      background:linear-gradient(135deg,var(--accent),#ff8fa3);color:#fff;
+      font-family:'Playfair Display',serif;font-size:16px;font-style:italic;
+      cursor:pointer;transition:opacity 0.2s,transform 0.15s;letter-spacing:0.5px;
     }
-    .calc-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-    .calc-btn:active { transform: scale(0.98); }
+    .calc-btn:hover { opacity:0.9;transform:translateY(-1px); }
+    .calc-btn:active { transform:scale(0.98); }
 
-    /* Result */
-    .result-box {
-      margin-top: 28px;
-      text-align: center;
-      animation: fadeUp 0.5s ease;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .result-emoji { font-size: 3rem; margin-bottom: 10px; }
+    .result-box { margin-top:28px;text-align:center;animation:fadeUp 0.5s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    .result-emoji { font-size:3rem;margin-bottom:10px; }
     .result-percent {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 12vw, 5rem);
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
+      font-family:'Playfair Display',serif;font-size:clamp(3rem,12vw,5rem);font-weight:700;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;
     }
-    .result-label {
-      margin-top: 8px;
-      font-size: 14px;
-      color: var(--muted);
-    }
+    .result-label { margin-top:8px;font-size:14px;color:var(--muted); }
+
+    .quote-wrapper { margin-top:18px;position:relative; }
     .result-quote {
-      margin-top: 18px;
-      padding: 16px 20px;
-      background: #1e1e26;
-      border-left: 3px solid var(--accent);
-      border-radius: 0 12px 12px 0;
-      font-size: 13px;
-      color: var(--text);
-      font-style: italic;
-      line-height: 1.6;
-      text-align: left;
+      padding:16px 44px 16px 20px;background:#1e1e26;
+      border-left:3px solid var(--accent);border-top:1px solid var(--border);
+      border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+      border-radius:0 12px 12px 0;font-size:13px;color:var(--text);font-style:italic;
+      line-height:1.6;text-align:left;width:100%;min-height:60px;resize:none;outline:none;
+      font-family:'DM Sans',sans-serif;transition:border-color 0.2s;
     }
+    .result-quote:focus { border-color:var(--accent2);font-style:normal; }
+    .edit-btn {
+      position:absolute;top:10px;right:10px;background:transparent;border:1px solid var(--border);
+      border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer;padding:4px 8px;transition:all 0.2s;
+    }
+    .edit-btn:hover { border-color:var(--accent2);color:var(--accent2); }
+    .edit-hint { font-size:11px;color:var(--muted);text-align:right;margin-top:5px;display:none; }
 
-    /* Share button */
     .share-btn {
-      margin-top: 16px;
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid var(--accent2);
-      background: transparent;
-      color: var(--accent2);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
+      margin-top:16px;width:100%;padding:12px;border-radius:12px;border:1px solid var(--accent2);
+      background:transparent;color:var(--accent2);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;
     }
-    .share-btn:hover { background: rgba(199,125,255,0.1); }
+    .share-btn:hover { background:rgba(199,125,255,0.1); }
+    .error { color:var(--accent);font-size:13px;margin-top:10px;text-align:center; }
 
-    /* Error */
-    .error { color: var(--accent); font-size: 13px; margin-top: 10px; text-align: center; }
-
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      z-index: 1;
-      position: relative;
+    /* How it works */
+    .how-card { margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px 22px; }
+    .how-card h2 { font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:18px;color:var(--text); }
+    .how-grid { display:flex;flex-direction:column;gap:14px; }
+    .how-item { display:flex;gap:14px;align-items:flex-start; }
+    .how-num {
+      min-width:28px;height:28px;border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;
     }
+    .how-text strong { display:block;font-size:13px;color:var(--text);margin-bottom:3px; }
+    .how-text span { font-size:12px;color:var(--muted);line-height:1.5; }
+
+    .mode-diff { margin-top:16px;border-radius:14px;overflow:hidden;border:1px solid var(--border); }
+    .mode-diff-row { display:flex; }
+    .mode-box { flex:1;padding:14px 16px;font-size:12px;line-height:1.6; }
+    .mode-box:first-child { border-right:1px solid var(--border);background:rgba(255,77,109,0.06); }
+    .mode-box:last-child { background:rgba(199,125,255,0.06); }
+    .mode-tag { display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;padding:2px 8px;border-radius:100px; }
+    .mode-box:first-child .mode-tag { background:rgba(255,77,109,0.2);color:var(--accent); }
+    .mode-box:last-child .mode-tag { background:rgba(199,125,255,0.2);color:var(--accent2); }
+    .mode-box p { color:var(--muted);font-size:12px; }
+    .mode-box code { display:block;margin-top:6px;font-size:11px;color:var(--text);background:#1e1e26;padding:5px 8px;border-radius:6px;font-family:monospace; }
+
+    footer { margin-top:40px;text-align:center;color:var(--muted);font-size:12px;z-index:1;position:relative; }
   </style>
 </head>
 <body>
@@ -263,31 +148,76 @@
   </header>
 
   <div class="card">
-    <!-- Emotion pills -->
     <div class="emotion-grid" id="emotionGrid"></div>
-
-    <!-- Mode -->
     <div class="mode-row">
       <button class="mode-btn active" id="btnMutual" onclick="setMode('and')">💞 Mutual</button>
       <button class="mode-btn" id="btnOneSided" onclick="setMode('for')">💭 One-Sided</button>
     </div>
-
-    <!-- Inputs -->
     <div class="input-row">
       <input type="text" id="name1" placeholder="First name" maxlength="30"/>
       <span class="connector" id="connectorText">and</span>
       <input type="text" id="name2" placeholder="Second name" maxlength="30"/>
     </div>
-
     <button class="calc-btn" onclick="calculate()">Calculate ✦</button>
-
     <div id="errorMsg" class="error"></div>
     <div id="resultBox" style="display:none" class="result-box">
       <div class="result-emoji" id="resEmoji"></div>
       <div class="result-percent" id="resPercent"></div>
       <div class="result-label" id="resLabel"></div>
-      <div class="result-quote" id="resQuote"></div>
+      <div class="quote-wrapper">
+        <textarea class="result-quote" id="resQuote" rows="2" spellcheck="false"></textarea>
+        <button class="edit-btn" onclick="focusQuote()" title="Edit message">✏️</button>
+        <div class="edit-hint" id="editHint">Type your own message, then share!</div>
+      </div>
       <button class="share-btn" onclick="shareResult()">📤 Share Result</button>
+    </div>
+  </div>
+
+  <div class="how-card">
+    <h2>✦ How does it work?</h2>
+    <div class="how-grid">
+      <div class="how-item">
+        <div class="how-num">1</div>
+        <div class="how-text">
+          <strong>Pick an emotion</strong>
+          <span>Choose from Love, Crush, Friendship, Jealousy, and 6 more feelings.</span>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">2</div>
+        <div class="how-text">
+          <strong>Choose Mutual or One-Sided</strong>
+          <span>Mutual = between two people equally. One-Sided = how much one person feels for another.</span>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">3</div>
+        <div class="how-text">
+          <strong>Enter two names & Calculate</strong>
+          <span>Same names always give the same result — it's deterministic, not random!</span>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">4</div>
+        <div class="how-text">
+          <strong>Edit ✏️ & Share</strong>
+          <span>Tap the edit button on the result to write your own custom message, then share with friends!</span>
+        </div>
+      </div>
+    </div>
+    <div class="mode-diff">
+      <div class="mode-diff-row">
+        <div class="mode-box">
+          <div class="mode-tag">Mutual</div>
+          <p>Feeling between both equally</p>
+          <code>Rahul and Priya → 74%</code>
+        </div>
+        <div class="mode-box">
+          <div class="mode-tag">One-Sided</div>
+          <p>First person's feeling for second</p>
+          <code>Rahul for Priya → 61%</code>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -296,22 +226,20 @@
 
 <script>
   const emotions = {
-    friend:    { emoji: "👯", lines: ["Some friendships feel like group projects — one tries, the other just shows up.", "It's always 'I got you' — until you fall."] },
-    love:      { emoji: "❤️", lines: ["Sometimes love doesn't fade — it just hides where they stopped looking.", "It felt full… until I realized I was loving alone."] },
-    hate:      { emoji: "💢", lines: ["Hate is just attention in a cheaper outfit.", "You never hated me — you just couldn't control me."] },
-    crush:     { emoji: "💘", lines: ["It's funny how one smile can ruin your entire emotional stability.", "You were never mine, just an overplayed thought in a lonely playlist."] },
-    obsession: { emoji: "🌀", lines: ["You call it obsession — I call it remembering too much.", "I watched your silence louder than your words."] },
-    doubt:     { emoji: "🤨", lines: ["Doubt always enters quietly, then lives rent-free.", "Even the clearest truths crack under whispered suspicions."] },
-    anger:     { emoji: "😤", lines: ["Anger isn't loud — sometimes it's just silence with clenched fists.", "It's not rage — it's the echo of every ignored feeling."] },
-    sympathy:  { emoji: "🫠", lines: ["Your sympathy feels like a compliment dipped in pity.", "Keep your concern — I've survived better enemies."] },
-    interest:  { emoji: "👀", lines: ["Funny how fast interest dies when honesty walks in.", "They noticed you just enough to keep you confused."] },
-    jealousy:  { emoji: "🫥", lines: ["It's not envy — it's just watching someone live what you only imagined.", "They want your life, just not your scars."] }
+    friend:    { emoji:"👯", lines:["Some friendships feel like group projects — one tries, the other just shows up.","It's always 'I got you' — until you fall."] },
+    love:      { emoji:"❤️", lines:["Sometimes love doesn't fade — it just hides where they stopped looking.","It felt full… until I realized I was loving alone."] },
+    hate:      { emoji:"💢", lines:["Hate is just attention in a cheaper outfit.","You never hated me — you just couldn't control me."] },
+    crush:     { emoji:"💘", lines:["It's funny how one smile can ruin your entire emotional stability.","You were never mine, just an overplayed thought in a lonely playlist."] },
+    obsession: { emoji:"🌀", lines:["You call it obsession — I call it remembering too much.","I watched your silence louder than your words."] },
+    doubt:     { emoji:"🤨", lines:["Doubt always enters quietly, then lives rent-free.","Even the clearest truths crack under whispered suspicions."] },
+    anger:     { emoji:"😤", lines:["Anger isn't loud — sometimes it's just silence with clenched fists.","It's not rage — it's the echo of every ignored feeling."] },
+    sympathy:  { emoji:"🫠", lines:["Your sympathy feels like a compliment dipped in pity.","Keep your concern — I've survived better enemies."] },
+    interest:  { emoji:"👀", lines:["Funny how fast interest dies when honesty walks in.","They noticed you just enough to keep you confused."] },
+    jealousy:  { emoji:"🫥", lines:["It's not envy — it's just watching someone live what you only imagined.","They want your life, just not your scars."] }
   };
 
-  let selectedEmotion = "love";
-  let mode = "and";
+  let selectedEmotion = "love", mode = "and";
 
-  // Build pills
   const grid = document.getElementById("emotionGrid");
   Object.keys(emotions).forEach(key => {
     const btn = document.createElement("button");
@@ -346,37 +274,27 @@
     const charCount = {};
     for (const ch of lower) charCount[ch] = (charCount[ch] || 0) + 1;
     let digits = [...lower].map(ch => charCount[ch]);
-
     while (digits.length > 2) {
-      const newDigits = [];
+      const nd = [];
       const half = Math.floor((digits.length + 1) / 2);
       for (let i = 0; i < half; i++) {
         if (i < digits.length - 1 - i) {
           const s = digits[i] + digits[digits.length - 1 - i];
-          if (s >= 10) newDigits.push(...String(s).split("").map(Number));
-          else newDigits.push(s);
-        } else {
-          newDigits.push(digits[i]);
-        }
+          if (s >= 10) nd.push(...String(s).split("").map(Number)); else nd.push(s);
+        } else nd.push(digits[i]);
       }
-      digits = newDigits;
+      digits = nd;
     }
-
     if (digits.length === 3) {
       const s = digits[0] + digits[2];
       const nd = s >= 10 ? [...String(s).split("").map(Number)] : [s];
-      nd.push(digits[1]);
-      digits = nd;
+      nd.push(digits[1]); digits = nd;
     }
     if (digits.length === 3) {
       const s = digits[0] + digits[1];
       digits = s >= 10 ? [...String(s).split("").map(Number), digits[2]] : [s, digits[2]];
     }
-
-    let pct;
-    if (digits.length === 2) pct = parseInt(`${digits[0]}${digits[1]}`);
-    else if (digits.length === 1) pct = digits[0] * 11;
-    else pct = 0;
+    let pct = digits.length === 2 ? parseInt(`${digits[0]}${digits[1]}`) : digits.length === 1 ? digits[0] * 11 : 0;
     return Math.max(1, Math.min(100, pct));
   }
 
@@ -386,37 +304,35 @@
     const err = document.getElementById("errorMsg");
     if (!n1 || !n2) { err.textContent = "⚠️ Please enter both names!"; return; }
     err.textContent = "";
-
     const cmd = "/" + selectedEmotion + " " + n1 + " " + mode + " " + n2;
     const pct = calculatePercentage(cmd, mode === "for", n1);
     const em = emotions[selectedEmotion];
     const quote = em.lines[Math.floor(Math.random() * em.lines.length)];
-
     document.getElementById("resEmoji").textContent = em.emoji;
     document.getElementById("resPercent").textContent = pct + "%";
-    document.getElementById("resLabel").textContent =
-      mode === "for"
-        ? `${n1}'s ${selectedEmotion} for ${n2}`
-        : `${n1} & ${n2} — ${selectedEmotion.charAt(0).toUpperCase() + selectedEmotion.slice(1)}`;
-    document.getElementById("resQuote").textContent = `"${quote}"`;
-
+    document.getElementById("resLabel").textContent = mode === "for"
+      ? `${n1}'s ${selectedEmotion} for ${n2}`
+      : `${n1} & ${n2} — ${selectedEmotion.charAt(0).toUpperCase() + selectedEmotion.slice(1)}`;
+    document.getElementById("resQuote").value = `"${quote}"`;
     const box = document.getElementById("resultBox");
-    box.style.display = "block";
-    box.style.animation = "none";
-    void box.offsetWidth;
-    box.style.animation = "fadeUp 0.5s ease";
+    box.style.display = "block"; box.style.animation = "none";
+    void box.offsetWidth; box.style.animation = "fadeUp 0.5s ease";
+  }
+
+  function focusQuote() {
+    const q = document.getElementById("resQuote");
+    q.focus(); q.select();
+    document.getElementById("editHint").style.display = "block";
   }
 
   function shareResult() {
     const label = document.getElementById("resLabel").textContent;
     const pct = document.getElementById("resPercent").textContent;
-    const text = `${label}: ${pct} 💫\nCheck yours at Feelings Calculator!`;
-    if (navigator.share) {
-      navigator.share({ title: "Feelings Calculator", text });
-    } else {
-      navigator.clipboard.writeText(text);
-      alert("Result copied to clipboard! Share it 🎉");
-    }
+    const quote = document.getElementById("resQuote").value;
+    const siteUrl = window.location.href;
+    const text = `${label}: ${pct} 💫\n${quote}\n\nCheck yours 👉 ${siteUrl}`;
+    if (navigator.share) navigator.share({ title: "Feelings Calculator", text });
+    else navigator.clipboard.writeText(text).then(() => alert("Result copied! Share it 🎉"));
   }
 </script>
 </body>
