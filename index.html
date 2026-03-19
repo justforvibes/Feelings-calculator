@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feelings Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0f;
+      --card: #16161a;
+      --border: #2a2a35;
+      --accent: #ff4d6d;
+      --accent2: #c77dff;
+      --text: #e8e8f0;
+      --muted: #7a7a90;
+      --glow: rgba(255, 77, 109, 0.18);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Background blobs */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::before {
+      width: 500px; height: 500px;
+      background: var(--accent);
+      top: -100px; left: -150px;
+    }
+    body::after {
+      width: 400px; height: 400px;
+      background: var(--accent2);
+      bottom: -80px; right: -120px;
+    }
+
+    .wrap { position: relative; z-index: 1; width: 100%; max-width: 560px; }
+
+    header { text-align: center; margin-bottom: 40px; }
+    header .tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #fff 30%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px 28px;
+      box-shadow: 0 0 60px var(--glow);
+    }
+
+    /* Emotion pills */
+    .emotion-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .pill {
+      cursor: pointer;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .pill:hover { border-color: var(--accent); color: var(--text); }
+    .pill.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(255,77,109,0.4);
+    }
+
+    /* Mode toggle */
+    .mode-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .mode-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mode-btn.active {
+      background: rgba(199,125,255,0.15);
+      border-color: var(--accent2);
+      color: var(--accent2);
+    }
+
+    /* Inputs */
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .input-row input {
+      flex: 1;
+      background: #1e1e26;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-row input:focus { border-color: var(--accent); }
+    .input-row input::placeholder { color: var(--muted); }
+    .connector {
+      color: var(--muted);
+      font-size: 12px;
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    /* Calculate button */
+    .calc-btn {
+      width: 100%;
+      padding: 15px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #ff8fa3);
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-style: italic;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      letter-spacing: 0.5px;
+    }
+    .calc-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .calc-btn:active { transform: scale(0.98); }
+
+    /* Result */
+    .result-box {
+      margin-top: 28px;
+      text-align: center;
+      animation: fadeUp 0.5s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .result-emoji { font-size: 3rem; margin-bottom: 10px; }
+    .result-percent {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 12vw, 5rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .result-label {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .result-quote {
+      margin-top: 18px;
+      padding: 16px 20px;
+      background: #1e1e26;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      font-size: 13px;
+      color: var(--text);
+      font-style: italic;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    /* Share button */
+    .share-btn {
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--accent2);
+      background: transparent;
+      color: var(--accent2);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .share-btn:hover { background: rgba(199,125,255,0.1); }
+
+    /* Error */
+    .error { color: var(--accent); font-size: 13px; margin-top: 10px; text-align: center; }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      z-index: 1;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="tag">✨ Just for fun</div>
+    <h1>Feelings Calculator</h1>
+    <p>Discover the emotional bond between two people</p>
+  </header>
+
+  <div class="card">
+    <!-- Emotion pills -->
+    <div class="emotion-grid" id="emotionGrid"></div>
+
+    <!-- Mode -->
+    <div class="mode-row">
+      <button class="mode-btn active" id="btnMutual" onclick="setMode('and')">💞 Mutual</button>
+      <button class="mode-btn" id="btnOneSided" onclick="setMode('for')">💭 One-Sided</button>
+    </div>
+
+    <!-- Inputs -->
+    <div class="input-row">
+      <input type="text" id="name1" placeholder="First name" maxlength="30"/>
+      <span class="connector" id="connectorText">and</span>
+      <input type="text" id="name2" placeholder="Second name" maxlength="30"/>
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">Calculate ✦</button>
+
+    <div id="errorMsg" class="error"></div>
+    <div id="resultBox" style="display:none" class="result-box">
+      <div class="result-emoji" id="resEmoji"></div>
+      <div class="result-percent" id="resPercent"></div>
+      <div class="result-label" id="resLabel"></div>
+      <div class="result-quote" id="resQuote"></div>
+      <button class="share-btn" onclick="shareResult()">📤 Share Result</button>
+    </div>
+  </div>
+
+  <footer>Made with 💗 · Just for fun, not science!</footer>
+</div>
+
+<script>
+  const emotions = {
+    friend:    { emoji: "👯", lines: ["Some friendships feel like group projects — one tries, the other just shows up.", "It's always 'I got you' — until you fall."] },
+    love:      { emoji: "❤️", lines: ["Sometimes love doesn't fade — it just hides where they stopped looking.", "It felt full… until I realized I was loving alone."] },
+    hate:      { emoji: "💢", lines: ["Hate is just attention in a cheaper outfit.", "You never hated me — you just couldn't control me."] },
+    crush:     { emoji: "💘", lines: ["It's funny how one smile can ruin your entire emotional stability.", "You were never mine, just an overplayed thought in a lonely playlist."] },
+    obsession: { emoji: "🌀", lines: ["You call it obsession — I call it remembering too much.", "I watched your silence louder than your words."] },
+    doubt:     { emoji: "🤨", lines: ["Doubt always enters quietly, then lives rent-free.", "Even the clearest truths crack under whispered suspicions."] },
+    anger:     { emoji: "😤", lines: ["Anger isn't loud — sometimes it's just silence with clenched fists.", "It's not rage — it's the echo of every ignored feeling."] },
+    sympathy:  { emoji: "🫠", lines: ["Your sympathy feels like a compliment dipped in pity.", "Keep your concern — I've survived better enemies."] },
+    interest:  { emoji: "👀", lines: ["Funny how fast interest dies when honesty walks in.", "They noticed you just enough to keep you confused."] },
+    jealousy:  { emoji: "🫥", lines: ["It's not envy — it's just watching someone live what you only imagined.", "They want your life, just not your scars."] }
+  };
+
+  let selectedEmotion = "love";
+  let mode = "and";
+
+  // Build pills
+  const grid = document.getElementById("emotionGrid");
+  Object.keys(emotions).forEach(key => {
+    const btn = document.createElement("button");
+    btn.className = "pill" + (key === selectedEmotion ? " active" : "");
+    btn.innerHTML = emotions[key].emoji + " " + key.charAt(0).toUpperCase() + key.slice(1);
+    btn.onclick = () => selectEmotion(key);
+    btn.id = "pill_" + key;
+    grid.appendChild(btn);
+  });
+
+  function selectEmotion(key) {
+    document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+    document.getElementById("pill_" + key).classList.add("active");
+    selectedEmotion = key;
+    document.getElementById("resultBox").style.display = "none";
+    document.getElementById("errorMsg").textContent = "";
+  }
+
+  function setMode(m) {
+    mode = m;
+    document.getElementById("connectorText").textContent = m === "and" ? "and" : "for";
+    document.getElementById("btnMutual").classList.toggle("active", m === "and");
+    document.getElementById("btnOneSided").classList.toggle("active", m === "for");
+    document.getElementById("resultBox").style.display = "none";
+    document.getElementById("errorMsg").textContent = "";
+  }
+
+  function calculatePercentage(inputString, isOneSided, firstName) {
+    if (isOneSided) inputString += "#" + firstName.toLowerCase();
+    if (!isOneSided) inputString = inputString.replace(/ /g, "");
+    const lower = inputString.toLowerCase();
+    const charCount = {};
+    for (const ch of lower) charCount[ch] = (charCount[ch] || 0) + 1;
+    let digits = [...lower].map(ch => charCount[ch]);
+
+    while (digits.length > 2) {
+      const newDigits = [];
+      const half = Math.floor((digits.length + 1) / 2);
+      for (let i = 0; i < half; i++) {
+        if (i < digits.length - 1 - i) {
+          const s = digits[i] + digits[digits.length - 1 - i];
+          if (s >= 10) newDigits.push(...String(s).split("").map(Number));
+          else newDigits.push(s);
+        } else {
+          newDigits.push(digits[i]);
+        }
+      }
+      digits = newDigits;
+    }
+
+    if (digits.length === 3) {
+      const s = digits[0] + digits[2];
+      const nd = s >= 10 ? [...String(s).split("").map(Number)] : [s];
+      nd.push(digits[1]);
+      digits = nd;
+    }
+    if (digits.length === 3) {
+      const s = digits[0] + digits[1];
+      digits = s >= 10 ? [...String(s).split("").map(Number), digits[2]] : [s, digits[2]];
+    }
+
+    let pct;
+    if (digits.length === 2) pct = parseInt(`${digits[0]}${digits[1]}`);
+    else if (digits.length === 1) pct = digits[0] * 11;
+    else pct = 0;
+    return Math.max(1, Math.min(100, pct));
+  }
+
+  function calculate() {
+    const n1 = document.getElementById("name1").value.trim();
+    const n2 = document.getElementById("name2").value.trim();
+    const err = document.getElementById("errorMsg");
+    if (!n1 || !n2) { err.textContent = "⚠️ Please enter both names!"; return; }
+    err.textContent = "";
+
+    const cmd = "/" + selectedEmotion + " " + n1 + " " + mode + " " + n2;
+    const pct = calculatePercentage(cmd, mode === "for", n1);
+    const em = emotions[selectedEmotion];
+    const quote = em.lines[Math.floor(Math.random() * em.lines.length)];
+
+    document.getElementById("resEmoji").textContent = em.emoji;
+    document.getElementById("resPercent").textContent = pct + "%";
+    document.getElementById("resLabel").textContent =
+      mode === "for"
+        ? `${n1}'s ${selectedEmotion} for ${n2}`
+        : `${n1} & ${n2} — ${selectedEmotion.charAt(0).toUpperCase() + selectedEmotion.slice(1)}`;
+    document.getElementById("resQuote").textContent = `"${quote}"`;
+
+    const box = document.getElementById("resultBox");
+    box.style.display = "block";
+    box.style.animation = "none";
+    void box.offsetWidth;
+    box.style.animation = "fadeUp 0.5s ease";
+  }
+
+  function shareResult() {
+    const label = document.getElementById("resLabel").textContent;
+    const pct = document.getElementById("resPercent").textContent;
+    const text = `${label}: ${pct} 💫\nCheck yours at Feelings Calculator!`;
+    if (navigator.share) {
+      navigator.share({ title: "Feelings Calculator", text });
+    } else {
+      navigator.clipboard.writeText(text);
+      alert("Result copied to clipboard! Share it 🎉");
+    }
+  }
+</script>
+</body>
+</html>
