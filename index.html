@@ -52,7 +52,7 @@
 
     .card { background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px 28px;box-shadow:0 0 60px var(--glow); }
 
-    .emotion-grid { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px; }
+    .emotion-grid { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px; }
     .pill {
       cursor:pointer;padding:7px 16px;border-radius:100px;border:1px solid var(--border);
       background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;
@@ -60,6 +60,31 @@
     }
     .pill:hover { border-color:var(--accent);color:var(--text); }
     .pill.active { background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 18px rgba(255,77,109,0.4); }
+
+    /* Custom emotion pill */
+    .pill-custom {
+      cursor:pointer;padding:7px 16px;border-radius:100px;
+      border:1.5px dashed var(--border);
+      background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;
+      transition:all 0.2s;display:flex;align-items:center;gap:6px;
+    }
+    .pill-custom:hover { border-color:var(--accent2);color:var(--accent2); }
+    .pill-custom.active { border-style:solid;background:rgba(199,125,255,0.15);border-color:var(--accent2);color:var(--accent2); }
+
+    /* Custom input box */
+    .custom-input-wrap {
+      display:none;margin-bottom:16px;
+      animation:fadeUp 0.3s ease;
+    }
+    .custom-input-wrap.show { display:block; }
+    .custom-input-wrap label { font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);display:block;margin-bottom:8px; }
+    .custom-emotion-input {
+      width:100%;background:#1e1e26;border:1.5px solid var(--accent2);border-radius:12px;
+      padding:12px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;
+      outline:none;transition:border-color 0.2s;
+    }
+    .custom-emotion-input::placeholder { color:var(--muted); }
+    .custom-emotion-input:focus { border-color:#a855f7; }
 
     .mode-row { display:flex;gap:10px;margin-bottom:24px; }
     .mode-btn {
@@ -192,6 +217,13 @@
 
   <div class="card">
     <div class="emotion-grid" id="emotionGrid"></div>
+
+    <!-- Custom emotion input -->
+    <div class="custom-input-wrap" id="customWrap">
+      <label>Your Custom Feeling</label>
+      <input class="custom-emotion-input" id="customEmotion" type="text" placeholder="e.g. loyalty, trust, cringe, respect..." maxlength="20"/>
+    </div>
+
     <div class="mode-row">
       <button class="mode-btn active" id="btnMutual" onclick="setMode('and')">💞 Mutual</button>
       <button class="mode-btn" id="btnOneSided" onclick="setMode('for')">💭 One-Sided</button>
@@ -223,7 +255,7 @@
         <div class="how-num">1</div>
         <div class="how-text">
           <strong>Pick an emotion</strong>
-          <span>Choose from Love, Crush, Friendship, Jealousy, and 6 more feelings.</span>
+          <span>Choose from Love, Crush, Friendship, Jealousy, and 6 more — or create your own!</span>
         </div>
       </div>
       <div class="how-item">
@@ -302,8 +334,23 @@
     jealousy:  { emoji:"🫥", lines:["It's not envy — it's just watching someone live what you only imagined.","They want your life, just not your scars."] }
   };
 
-  let selectedEmotion = "love", mode = "and";
+  // Custom emotion quotes
+  const customQuotes = [
+    "Numbers don't lie — even when people do.",
+    "The calculator has spoken. No appeals.",
+    "Science confirmed what you already felt.",
+    "This result is certified by the universe.",
+    "Even the algorithm sees it clearly.",
+    "Some truths only math can reveal.",
+    "The data is in. Draw your own conclusions.",
+    "Calculated. Delivered. No refunds."
+  ];
 
+  let selectedEmotion = "love";
+  let isCustom = false;
+  let mode = "and";
+
+  // Build emotion pills
   const grid = document.getElementById("emotionGrid");
   Object.keys(emotions).forEach(key => {
     const btn = document.createElement("button");
@@ -314,10 +361,32 @@
     grid.appendChild(btn);
   });
 
+  // Add custom pill
+  const customPill = document.createElement("button");
+  customPill.className = "pill-custom";
+  customPill.id = "pill_custom";
+  customPill.innerHTML = "✨ Custom";
+  customPill.onclick = () => selectCustom();
+  grid.appendChild(customPill);
+
   function selectEmotion(key) {
     document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".pill-custom").forEach(p => p.classList.remove("active"));
     document.getElementById("pill_" + key).classList.add("active");
     selectedEmotion = key;
+    isCustom = false;
+    document.getElementById("customWrap").classList.remove("show");
+    document.getElementById("resultBox").style.display = "none";
+    document.getElementById("errorMsg").textContent = "";
+  }
+
+  function selectCustom() {
+    document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+    document.getElementById("pill_custom").classList.add("active");
+    isCustom = true;
+    selectedEmotion = "custom";
+    document.getElementById("customWrap").classList.add("show");
+    document.getElementById("customEmotion").focus();
     document.getElementById("resultBox").style.display = "none";
     document.getElementById("errorMsg").textContent = "";
   }
@@ -366,18 +435,34 @@
     const n1 = document.getElementById("name1").value.trim();
     const n2 = document.getElementById("name2").value.trim();
     const err = document.getElementById("errorMsg");
+
     if (!n1 || !n2) { err.textContent = "⚠️ Please enter both names!"; return; }
+
+    let emotionName, emoji, quote;
+
+    if (isCustom) {
+      emotionName = document.getElementById("customEmotion").value.trim();
+      if (!emotionName) { err.textContent = "⚠️ Please enter a custom feeling name!"; return; }
+      emoji = "✨";
+      quote = customQuotes[Math.floor(Math.random() * customQuotes.length)];
+    } else {
+      emotionName = selectedEmotion;
+      emoji = emotions[selectedEmotion].emoji;
+      const lines = emotions[selectedEmotion].lines;
+      quote = lines[Math.floor(Math.random() * lines.length)];
+    }
+
     err.textContent = "";
-    const cmd = "/" + selectedEmotion + " " + n1 + " " + mode + " " + n2;
+    const cmd = "/" + emotionName + " " + n1 + " " + mode + " " + n2;
     const pct = calculatePercentage(cmd, mode === "for", n1);
-    const em = emotions[selectedEmotion];
-    const quote = em.lines[Math.floor(Math.random() * em.lines.length)];
-    document.getElementById("resEmoji").textContent = em.emoji;
+
+    document.getElementById("resEmoji").textContent = emoji;
     document.getElementById("resPercent").textContent = pct + "%";
     document.getElementById("resLabel").textContent = mode === "for"
-      ? `${n1}'s ${selectedEmotion} for ${n2}`
-      : `${n1} & ${n2} — ${selectedEmotion.charAt(0).toUpperCase() + selectedEmotion.slice(1)}`;
+      ? `${n1}'s ${emotionName} for ${n2}`
+      : `${n1} & ${n2} — ${emotionName.charAt(0).toUpperCase() + emotionName.slice(1)}`;
     document.getElementById("resQuote").value = `"${quote}"`;
+
     const box = document.getElementById("resultBox");
     box.style.display = "block"; box.style.animation = "none";
     void box.offsetWidth; box.style.animation = "fadeUp 0.5s ease";
