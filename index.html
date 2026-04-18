@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Feelings Calculator — Love, Crush & Friendship Percentage | JustForVibes</title>
   <meta name="site_name" content="JustForVibes"/>
   <meta name="description" content="Calculate love, crush, friendship and more between two people. Free fun feelings percentage calculator — share your result with friends!"/>
-  <meta name="keywords" content="feelings calculator, love calculator 2025, crush percentage, friendship test, situationship meter, BFF test, love percentage, relationship calculator"/>
-  <meta property="og:title" content="Feelings Calculator 💘 — JustForVibes"/>
+  <meta name="keywords" content="feelings calculator, love calculator, crush percentage, friendship test, situationship meter, BFF test, love percentage, relationship calculator, what are the chances, feelings between two people"/>
+  <meta property="og:title" content="Feelings Calculator — JustForVibes"/>
   <meta property="og:site_name" content="JustForVibes"/>
   <meta property="og:description" content="Find out the feelings percentage between you and someone special. Try love, crush, friendship and more!"/>
   <meta property="og:type" content="website"/>
@@ -38,130 +38,59 @@
     }
     body::before { width:500px;height:500px;background:var(--accent);top:-100px;left:-150px; }
     body::after  { width:400px;height:400px;background:var(--accent2);bottom:-80px;right:-120px; }
-
     .wrap { position:relative;z-index:1;width:100%;max-width:560px; }
-
     header { text-align:center;margin-bottom:40px; }
-    header .tag { display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:14px; }
-    header h1 {
-      font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3rem);font-weight:700;line-height:1.15;
+    .tag { display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:14px; }
+    h1 { font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3rem);font-weight:700;line-height:1.15;
       background:linear-gradient(135deg,#fff 30%,var(--accent2));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-    }
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
     header p { margin-top:12px;color:var(--muted);font-size:14px;font-weight:300; }
-
     .card { background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px 28px;box-shadow:0 0 60px var(--glow); }
-
     .emotion-grid { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px; }
-    .pill {
-      cursor:pointer;padding:7px 16px;border-radius:100px;border:1px solid var(--border);
-      background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;
-      transition:all 0.2s;display:flex;align-items:center;gap:6px;
-    }
+    .pill { cursor:pointer;padding:7px 16px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;transition:all 0.2s;display:flex;align-items:center;gap:6px; }
     .pill:hover { border-color:var(--accent);color:var(--text); }
     .pill.active { background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 18px rgba(255,77,109,0.4); }
-
-    /* Custom emotion pill */
-    .pill-custom {
-      cursor:pointer;padding:7px 16px;border-radius:100px;
-      border:1.5px dashed var(--border);
-      background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;
-      transition:all 0.2s;display:flex;align-items:center;gap:6px;
-    }
+    .pill-custom { cursor:pointer;padding:7px 16px;border-radius:100px;border:1.5px dashed var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;transition:all 0.2s;display:flex;align-items:center;gap:6px; }
     .pill-custom:hover { border-color:var(--accent2);color:var(--accent2); }
     .pill-custom.active { border-style:solid;background:rgba(199,125,255,0.15);border-color:var(--accent2);color:var(--accent2); }
-
-    /* Custom input box */
-    .custom-input-wrap {
-      display:none;margin-bottom:16px;
-      animation:fadeUp 0.3s ease;
-    }
+    .custom-input-wrap { display:none;margin-bottom:16px;animation:fadeUp 0.3s ease; }
     .custom-input-wrap.show { display:block; }
     .custom-input-wrap label { font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);display:block;margin-bottom:8px; }
-    .custom-emotion-input {
-      width:100%;background:#1e1e26;border:1.5px solid var(--accent2);border-radius:12px;
-      padding:12px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;
-      outline:none;transition:border-color 0.2s;
-    }
+    .custom-emotion-input { width:100%;background:#1e1e26;border:1.5px solid var(--accent2);border-radius:12px;padding:12px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none; }
     .custom-emotion-input::placeholder { color:var(--muted); }
-    .custom-emotion-input:focus { border-color:#a855f7; }
-
     .mode-row { display:flex;gap:10px;margin-bottom:24px; }
-    .mode-btn {
-      flex:1;padding:10px;border-radius:12px;border:1px solid var(--border);
-      background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;
-    }
+    .mode-btn { flex:1;padding:10px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s; }
     .mode-btn.active { background:rgba(199,125,255,0.15);border-color:var(--accent2);color:var(--accent2); }
-
     .input-row { display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap; }
-    .input-row input {
-      flex:1;min-width:120px;background:#1e1e26;border:1px solid var(--border);border-radius:12px;
-      padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;
-    }
+    .input-row input { flex:1;min-width:120px;background:#1e1e26;border:1px solid var(--border);border-radius:12px;padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s; }
     .input-row input:focus { border-color:var(--accent); }
     .input-row input::placeholder { color:var(--muted); }
     .connector { color:var(--muted);font-size:12px;font-style:italic;white-space:nowrap; }
-    @media (max-width: 400px) {
-      .input-row { flex-direction:column; align-items:stretch; }
-      .input-row input { min-width:unset; width:100%; }
-      .connector { text-align:center; }
-    }
-
-    .calc-btn {
-      width:100%;padding:15px;border-radius:14px;border:none;
-      background:linear-gradient(135deg,var(--accent),#ff8fa3);color:#fff;
-      font-family:'Playfair Display',serif;font-size:16px;font-style:italic;
-      cursor:pointer;transition:opacity 0.2s,transform 0.15s;letter-spacing:0.5px;
-    }
+    @media (max-width:400px) { .input-row { flex-direction:column;align-items:stretch; } .input-row input { min-width:unset;width:100%; } .connector { text-align:center; } }
+    .calc-btn { width:100%;padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--accent),#ff8fa3);color:#fff;font-family:'Playfair Display',serif;font-size:16px;font-style:italic;cursor:pointer;transition:opacity 0.2s,transform 0.15s;letter-spacing:0.5px; }
     .calc-btn:hover { opacity:0.9;transform:translateY(-1px); }
     .calc-btn:active { transform:scale(0.98); }
-
     .result-box { margin-top:28px;text-align:center;animation:fadeUp 0.5s ease; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
     .result-emoji { font-size:3rem;margin-bottom:10px; }
-    .result-percent {
-      font-family:'Playfair Display',serif;font-size:clamp(3rem,12vw,5rem);font-weight:700;
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;
-    }
+    .result-percent { font-family:'Playfair Display',serif;font-size:clamp(3rem,12vw,5rem);font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1; }
     .result-label { margin-top:8px;font-size:14px;color:var(--muted); }
-
     .quote-wrapper { margin-top:18px;position:relative; }
-    .result-quote {
-      padding:16px 44px 16px 20px;background:#1e1e26;
-      border-left:3px solid var(--accent);border-top:1px solid var(--border);
-      border-right:1px solid var(--border);border-bottom:1px solid var(--border);
-      border-radius:0 12px 12px 0;font-size:13px;color:var(--text);font-style:italic;
-      line-height:1.6;text-align:left;width:100%;min-height:60px;resize:none;outline:none;
-      font-family:'DM Sans',sans-serif;transition:border-color 0.2s;
-    }
+    .result-quote { padding:16px 44px 16px 20px;background:#1e1e26;border-left:3px solid var(--accent);border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);border-radius:0 12px 12px 0;font-size:13px;color:var(--text);font-style:italic;line-height:1.6;text-align:left;width:100%;min-height:60px;resize:none;outline:none;font-family:'DM Sans',sans-serif;transition:border-color 0.2s; }
     .result-quote:focus { border-color:var(--accent2);font-style:normal; }
-    .edit-btn {
-      position:absolute;top:10px;right:10px;background:transparent;border:1px solid var(--border);
-      border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer;padding:4px 8px;transition:all 0.2s;
-    }
+    .edit-btn { position:absolute;top:10px;right:10px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer;padding:4px 8px;transition:all 0.2s; }
     .edit-btn:hover { border-color:var(--accent2);color:var(--accent2); }
     .edit-hint { font-size:11px;color:var(--muted);text-align:right;margin-top:5px;display:none; }
-
-    .share-btn {
-      margin-top:16px;width:100%;padding:12px;border-radius:12px;border:1px solid var(--accent2);
-      background:transparent;color:var(--accent2);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;
-    }
+    .share-btn { margin-top:16px;width:100%;padding:12px;border-radius:12px;border:1px solid var(--accent2);background:transparent;color:var(--accent2);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s; }
     .share-btn:hover { background:rgba(199,125,255,0.1); }
     .error { color:var(--accent);font-size:13px;margin-top:10px;text-align:center; }
-
     .how-card { margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px 22px; }
     .how-card h2 { font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:18px;color:var(--text); }
     .how-grid { display:flex;flex-direction:column;gap:14px; }
     .how-item { display:flex;gap:14px;align-items:flex-start; }
-    .how-num {
-      min-width:28px;height:28px;border-radius:50%;
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;
-    }
+    .how-num { min-width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0; }
     .how-text strong { display:block;font-size:13px;color:var(--text);margin-bottom:3px; }
     .how-text span { font-size:12px;color:var(--muted);line-height:1.5; }
-
     .mode-diff { margin-top:16px;border-radius:14px;overflow:hidden;border:1px solid var(--border); }
     .mode-diff-row { display:flex; }
     .mode-box { flex:1;padding:14px 16px;font-size:12px;line-height:1.6; }
@@ -172,36 +101,26 @@
     .mode-box:last-child .mode-tag { background:rgba(199,125,255,0.2);color:var(--accent2); }
     .mode-box p { color:var(--muted);font-size:12px; }
     .mode-box code { display:block;margin-top:6px;font-size:11px;color:var(--text);background:#1e1e26;padding:5px 8px;border-radius:6px;font-family:monospace; }
-
     .trend-card { margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px; }
     .trend-top { display:flex;align-items:center;gap:8px;margin-bottom:16px; }
-    .trend-fire { font-size:18px; }
-    .trend-title { font-family:'Playfair Display',serif;font-size:1rem;color:var(--text); }
     .trend-tags { display:flex;flex-wrap:wrap;gap:8px; }
-    .ttag {
-      cursor:pointer;padding:8px 14px;border-radius:100px;
-      border:1px solid var(--border);background:transparent;
-      color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;transition:all 0.2s;
-    }
+    .ttag { cursor:pointer;padding:8px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;transition:all 0.2s; }
     .ttag:hover { border-color:var(--accent);color:var(--text);background:rgba(255,77,109,0.08); }
     .seo-block { margin-top:20px;padding:20px 22px;background:var(--card);border:1px solid var(--border);border-radius:20px; }
     .seo-block p { font-size:12px;color:var(--muted);line-height:1.8; }
     .seo-block strong { color:var(--text);font-weight:500; }
-    footer { margin-top:40px;text-align:center;color:var(--muted);font-size:12px;z-index:1;position:relative; }
+    footer { margin-top:40px;text-align:center;color:var(--muted);font-size:12px;z-index:1;position:relative;line-height:2; }
+    footer a { color:var(--accent);text-decoration:none;margin:0 5px; }
+    footer a:hover { text-decoration:underline; }
   </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="logo-wrap">
+    <div>
       <svg width="64" height="64" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 12px;">
         <rect width="100" height="100" rx="20" fill="#16161a"/>
-        <defs>
-          <linearGradient id="lgf" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff4d6d"/>
-            <stop offset="100%" stop-color="#c77dff"/>
-          </linearGradient>
-        </defs>
+        <defs><linearGradient id="lgf" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff4d6d"/><stop offset="100%" stop-color="#c77dff"/></linearGradient></defs>
         <circle cx="50" cy="50" r="40" fill="none" stroke="#ff4d6d" stroke-width="2" stroke-dasharray="4 3" opacity="0.5"/>
         <text x="50" y="62" text-anchor="middle" font-family="Georgia,serif" font-size="44" font-weight="700" fill="url(#lgf)">%</text>
         <circle cx="25" cy="28" r="5" fill="#ff4d6d" opacity="0.9"/>
@@ -217,13 +136,10 @@
 
   <div class="card">
     <div class="emotion-grid" id="emotionGrid"></div>
-
-    <!-- Custom emotion input -->
     <div class="custom-input-wrap" id="customWrap">
       <label>Your Custom Feeling</label>
       <input class="custom-emotion-input" id="customEmotion" type="text" placeholder="e.g. loyalty, trust, cringe, respect..." maxlength="20"/>
     </div>
-
     <div class="mode-row">
       <button class="mode-btn active" id="btnMutual" onclick="setMode('and')">💞 Mutual</button>
       <button class="mode-btn" id="btnOneSided" onclick="setMode('for')">💭 One-Sided</button>
@@ -253,31 +169,19 @@
     <div class="how-grid">
       <div class="how-item">
         <div class="how-num">1</div>
-        <div class="how-text">
-          <strong>Pick an emotion</strong>
-          <span>Choose from Love, Crush, Friendship, Jealousy, and 6 more — or create your own!</span>
-        </div>
+        <div class="how-text"><strong>Pick an emotion</strong><span>Choose from Love, Crush, Friendship, Jealousy, and 6 more — or create your own!</span></div>
       </div>
       <div class="how-item">
         <div class="how-num">2</div>
-        <div class="how-text">
-          <strong>Choose Mutual or One-Sided</strong>
-          <span>Mutual = between two people equally. One-Sided = how much one person feels for another.</span>
-        </div>
+        <div class="how-text"><strong>Choose Mutual or One-Sided</strong><span>Mutual = between two people equally. One-Sided = how much one person feels for another.</span></div>
       </div>
       <div class="how-item">
         <div class="how-num">3</div>
-        <div class="how-text">
-          <strong>Enter two names & Calculate</strong>
-          <span>Same names always give the same result — it's deterministic, not random!</span>
-        </div>
+        <div class="how-text"><strong>Enter two names & Calculate</strong><span>Same names always give the same result — it's deterministic, not random!</span></div>
       </div>
       <div class="how-item">
         <div class="how-num">4</div>
-        <div class="how-text">
-          <strong>Edit ✏️ & Share</strong>
-          <span>Tap the edit button on the result to write your own custom message, then share with friends!</span>
-        </div>
+        <div class="how-text"><strong>Edit ✏️ & Share</strong><span>Tap the edit button to write your own custom message, then share with friends!</span></div>
       </div>
     </div>
     <div class="mode-diff">
@@ -298,8 +202,8 @@
 
   <div class="trend-card">
     <div class="trend-top">
-      <span class="trend-fire">🔥</span>
-      <span class="trend-title">Trending Right Now</span>
+      <span style="font-size:18px">🔥</span>
+      <span style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text)">Trending Right Now</span>
     </div>
     <div class="trend-tags">
       <button class="ttag" onclick="applyTrend('crush')">💘 Crush Percentage</button>
@@ -317,7 +221,14 @@
     <p>Feelings Calculator is a fun tool to calculate love percentage, crush compatibility, friendship level, and more between two people. Whether you're wondering about <strong>signs of slow dating</strong>, checking <strong>marriage compatibility</strong>, spotting <strong>red flags vs beige flags</strong>, or figuring out if you're in a <strong>situationship</strong> — just enter two names and find out! Perfect for checking your <strong>crush percentage</strong>, <strong>BFF compatibility</strong>, or even <strong>ghosting levels</strong>. 100% fun, 0% science. 😄</p>
   </div>
 
-  <footer>Made with 💗 · Just for fun, not science!</footer>
+  <footer>
+    Made with 💗 by JustForVibes<br/>
+    <a href="about.html">About Us</a> ·
+    <a href="privacy-policy.html">Privacy Policy</a> ·
+    <a href="disclaimer.html">Disclaimer</a> ·
+    <a href="contact.html">Contact</a> ·
+    <a href="https://www.reddit.com/user/Feelings-Calculator/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button" target="_blank" rel="noopener">Reddit</a>
+  </footer>
 </div>
 
 <script>
@@ -334,7 +245,6 @@
     jealousy:  { emoji:"🫥", lines:["It's not envy — it's just watching someone live what you only imagined.","They want your life, just not your scars."] }
   };
 
-  // Custom emotion quotes
   const customQuotes = [
     "Numbers don't lie — even when people do.",
     "The calculator has spoken. No appeals.",
@@ -346,11 +256,8 @@
     "Calculated. Delivered. No refunds."
   ];
 
-  let selectedEmotion = "love";
-  let isCustom = false;
-  let mode = "and";
+  let selectedEmotion = "love", isCustom = false, mode = "and";
 
-  // Build emotion pills
   const grid = document.getElementById("emotionGrid");
   Object.keys(emotions).forEach(key => {
     const btn = document.createElement("button");
@@ -360,8 +267,6 @@
     btn.id = "pill_" + key;
     grid.appendChild(btn);
   });
-
-  // Add custom pill
   const customPill = document.createElement("button");
   customPill.className = "pill-custom";
   customPill.id = "pill_custom";
@@ -373,8 +278,7 @@
     document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
     document.querySelectorAll(".pill-custom").forEach(p => p.classList.remove("active"));
     document.getElementById("pill_" + key).classList.add("active");
-    selectedEmotion = key;
-    isCustom = false;
+    selectedEmotion = key; isCustom = false;
     document.getElementById("customWrap").classList.remove("show");
     document.getElementById("resultBox").style.display = "none";
     document.getElementById("errorMsg").textContent = "";
@@ -383,8 +287,7 @@
   function selectCustom() {
     document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
     document.getElementById("pill_custom").classList.add("active");
-    isCustom = true;
-    selectedEmotion = "custom";
+    isCustom = true; selectedEmotion = "custom";
     document.getElementById("customWrap").classList.add("show");
     document.getElementById("customEmotion").focus();
     document.getElementById("resultBox").style.display = "none";
@@ -435,11 +338,8 @@
     const n1 = document.getElementById("name1").value.trim();
     const n2 = document.getElementById("name2").value.trim();
     const err = document.getElementById("errorMsg");
-
     if (!n1 || !n2) { err.textContent = "⚠️ Please enter both names!"; return; }
-
     let emotionName, emoji, quote;
-
     if (isCustom) {
       emotionName = document.getElementById("customEmotion").value.trim();
       if (!emotionName) { err.textContent = "⚠️ Please enter a custom feeling name!"; return; }
@@ -451,18 +351,15 @@
       const lines = emotions[selectedEmotion].lines;
       quote = lines[Math.floor(Math.random() * lines.length)];
     }
-
     err.textContent = "";
     const cmd = "/" + emotionName + " " + n1 + " " + mode + " " + n2;
     const pct = calculatePercentage(cmd, mode === "for", n1);
-
     document.getElementById("resEmoji").textContent = emoji;
     document.getElementById("resPercent").textContent = pct + "%";
     document.getElementById("resLabel").textContent = mode === "for"
       ? `${n1}'s ${emotionName} for ${n2}`
       : `${n1} & ${n2} — ${emotionName.charAt(0).toUpperCase() + emotionName.slice(1)}`;
     document.getElementById("resQuote").value = `"${quote}"`;
-
     const box = document.getElementById("resultBox");
     box.style.display = "block"; box.style.animation = "none";
     void box.offsetWidth; box.style.animation = "fadeUp 0.5s ease";
@@ -484,8 +381,7 @@
     const label = document.getElementById("resLabel").textContent;
     const pct = document.getElementById("resPercent").textContent;
     const quote = document.getElementById("resQuote").value;
-    const siteUrl = window.location.href;
-    const text = `${label}: ${pct} 💫\n${quote}\n\nCheck yours 👉 ${siteUrl}`;
+    const text = `${label}: ${pct} 💫\n${quote}\n\nCheck yours 👉 ${window.location.href}`;
     if (navigator.share) navigator.share({ title: "Feelings Calculator", text });
     else navigator.clipboard.writeText(text).then(() => alert("Result copied! Share it 🎉"));
   }
